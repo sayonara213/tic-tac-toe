@@ -1,38 +1,30 @@
-.App {
-  text-align: center;
+@font-face {
+  font-family: 'medium';
+  src: url('./assets/fonts/Roboto/Roboto-Medium.ttf') format('truetype');
+  font-display: swap;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@font-face {
+  font-family: 'bold';
+  src: url('./assets/fonts/Roboto/Roboto-Bold.ttf') format('truetype');
+  font-display: swap;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+@font-face {
+  font-family: 'regular';
+  src: url('./assets/fonts/Roboto/Roboto-Regular.ttf') format('truetype');
+  font-display: swap;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+@font-face {
+  font-family: 'light';
+  src: url('./assets/fonts/Roboto/Roboto-Light.ttf') format('truetype');
+  font-display: swap;
 }
-
-.App-link {
-  color: #61dafb;
+@font-face {
+  font-family: 'thin';
+  src: url('./assets/fonts/Roboto/Roboto-Thin.ttf') format('truetype');
+  font-display: swap;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@font-face {
+  font-family: 'black';
+  src: url('./assets/fonts/Roboto/Roboto-Black.ttf') format('truetype');
+  font-display: swap;
 }
