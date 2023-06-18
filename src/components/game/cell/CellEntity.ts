@@ -8,4 +8,12 @@ export class CellEntity {
     this.id = id;
     this.type = type;
   }
+
+  setCircle() {
+    this.type = 'circle';
+  }
+
+  setCross() {
+    this.type = 'cross';
+  }
 }
