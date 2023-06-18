@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { FieldStyled as Styled } from './Field.styled';
 import Cell from '../cell/Cell';
-import { FieldEntity } from './FieldEntity';
-import { CellEntity, CellType } from '../cell/CellEntity';
-import Confetti from 'react-confetti';
+import { FieldEntity } from '../../../models/game/field/FieldEntity';
+import { CellType } from '../../../models/game/cell/CellEntity';
 
 interface FieldProps {
   field: FieldEntity;
@@ -13,6 +12,9 @@ interface FieldProps {
 
 const Field: React.FC<FieldProps> = ({ field, setField }) => {
   const setCellType = (id: number, type: CellType) => {
+    if (field.won !== 'empty') {
+      return;
+    }
     const newField = new FieldEntity();
     newField.cells = [...field.cells];
     const cell = newField.cells.find((cell) => cell.id === id);
@@ -24,19 +26,11 @@ const Field: React.FC<FieldProps> = ({ field, setField }) => {
   };
 
   return (
-    <>
-      <Styled.Container>
-        {field.cells.map((cell) => (
-          <Cell
-            key={cell.id}
-            type={cell.type}
-            id={cell.id}
-            onClick={setCellType}
-            move={field.move}
-          />
-        ))}
-      </Styled.Container>
-    </>
+    <Styled.Container>
+      {field.cells.map((cell) => (
+        <Cell key={cell.id} type={cell.type} id={cell.id} onClick={setCellType} move={field.move} />
+      ))}
+    </Styled.Container>
   );
 };
 

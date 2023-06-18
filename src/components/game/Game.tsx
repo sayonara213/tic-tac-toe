@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Field from './field/Field';
-import { FieldEntity } from './field/FieldEntity';
+import { FieldEntity } from '../../models/game/field/FieldEntity';
 import { GameStyled as Styled } from './Game.styled';
 import Confetti from 'react-confetti';
 
@@ -36,7 +36,7 @@ const Game: React.FC = () => {
     <Styled.Container>
       <Field field={field} setField={setField} />
       <Styled.Button onClick={restart}>RESTART</Styled.Button>
-      {isWin && <Confetti />}
+      {isWin && <Confetti width={document.body.clientWidth} />}
     </Styled.Container>
   );
 };

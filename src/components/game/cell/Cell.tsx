@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 import { CellStyled as Styled } from './Cell.styled';
-import { CellType } from './CellEntity';
+import { CellType } from '../../../models/game/cell/CellEntity';
 import { IMAGES } from '../../../constants/images';
-import { TMove } from '../field/FieldEntity';
+import { TMove } from '../../../models/game/field/FieldEntity';
 
 interface CellProps {
   id: number;

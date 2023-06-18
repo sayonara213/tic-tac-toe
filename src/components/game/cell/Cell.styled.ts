@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
-import { CellType } from './CellEntity';
-import { TMove } from '../field/FieldEntity';
+import { CellType } from '../../../models/game/cell/CellEntity';
+import { TMove } from '../../../models/game/field/FieldEntity';
 
 interface CellStyledProps {
   move: TMove;
@@ -8,36 +8,29 @@ interface CellStyledProps {
   isClicked: boolean;
 }
 
-const cellColor = {
+const cellColor = (move: TMove) => ({
   empty: css`
     background-color: ${({ theme }) => theme.color.background};
     border: 2px solid ${({ theme }) => theme.color.light};
 
     &:hover {
       transform: scale(1.1);
-      color: ${({ theme }) => theme.color.dark};
       box-shadow: 0 0 10px ${({ theme }) => theme.color.background};
+      background-color: ${({ theme }) =>
+        move === 'circle' ? theme.color.green : theme.color.yellow};
+      border: 2px solid
+        ${({ theme }) => (move === 'circle' ? theme.color.green : theme.color.yellow)};
     }
   `,
   circle: css`
     background-color: ${({ theme }) => theme.color.green};
     border: 2px solid ${({ theme }) => theme.color.green};
-
-    &:hover {
-      background-color: ${({ theme }) => theme.color.green};
-      border: 2px solid ${({ theme }) => theme.color.green};
-    }
   `,
   cross: css`
     background-color: ${({ theme }) => theme.color.yellow};
     border: 2px solid ${({ theme }) => theme.color.yellow};
-
-    &:hover {
-      background-color: ${({ theme }) => theme.color.yellow};
-      border: 2px solid ${({ theme }) => theme.color.yellow};
-    }
   `,
-};
+});
 
 export const CellStyled = {
   Container: styled.div<CellStyledProps>`
@@ -50,20 +43,14 @@ export const CellStyled = {
 
     transition: all 0.1s ease-in-out;
 
-    &:hover {
-      background-color: ${({ theme, move }) =>
-        move === 'circle' ? theme.color.green : theme.color.yellow};
-
-      border: 2px solid
-        ${({ theme, move }) => (move === 'circle' ? theme.color.green : theme.color.yellow)};
-    }
-
     ${({ isClicked }) =>
       isClicked &&
       css`
         animation: scaleDownAndUp 0.2s ease-in-out;
       `}
 
+    ${({ type, move }) => cellColor(move)[type]}
+    
     @keyframes scaleDownAndUp {
       0% {
         transform: scale(1.1);
@@ -75,7 +62,6 @@ export const CellStyled = {
         transform: scale(1);
       }
     }
-    ${({ type }) => cellColor[type]}
   `,
   Icon: styled.img`
     width: 70%;

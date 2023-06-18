@@ -25,7 +25,8 @@ export const COLOR = {
   text: '#ffffff',
   light: '#c2c2c3',
   green: '#538d4e',
-  yellow: '#b59f3b',
+  //yellow: '#b59f3b',
+  yellow: '#b53b3b',
   lightSecond: '#818384',
 };
 export const BORDER_RADIUS = {
