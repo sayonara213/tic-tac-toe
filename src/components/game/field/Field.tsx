@@ -12,17 +12,10 @@ interface FieldProps {
 
 const Field: React.FC<FieldProps> = ({ field, setField }) => {
   const setCellType = (id: number, type: CellType) => {
-    if (field.won !== 'empty') {
-      return;
-    }
     const newField = new FieldEntity();
-    newField.cells = [...field.cells];
-    const cell = newField.cells.find((cell) => cell.id === id);
-    if (cell?.type === 'empty') {
-      field.move === 'circle' ? cell.setCircle() : cell.setCross();
-      newField.setMove(field.move === 'circle' ? 'cross' : 'circle');
-      setField(newField);
-    }
+    newField.copy(field);
+    newField.playerMove(id);
+    setField(newField);
   };
 
   return (

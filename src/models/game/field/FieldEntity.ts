@@ -19,6 +19,12 @@ export class FieldEntity {
   public move: TMove = 'circle';
   public won: TWon = 'empty';
 
+  copy(field: FieldEntity) {
+    this.cells = field.cells;
+    this.move = field.move;
+    this.won = field.won;
+  }
+
   setCellType(id: number, type: CellType) {
     this.cells[id].type = type;
   }
@@ -56,5 +62,15 @@ export class FieldEntity {
       }
     }
     return false;
+  }
+
+  playerMove(id: number) {
+    if (this.won !== 'empty') return;
+    const cell = this.cells.find((cell) => cell.id === id);
+    if (cell?.type === 'empty') {
+      cell.type = this.move;
+      const newMove = this.move === 'circle' ? 'cross' : 'circle';
+      this.move = newMove;
+    }
   }
 }
