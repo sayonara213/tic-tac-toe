@@ -3,14 +3,18 @@ import { GameStyled as Styled } from './Game.styled';
 import Confetti from 'react-confetti';
 import { GameProps } from './Game.types';
 import { useGameState } from './Game.state';
+import CustomButton from '../button/CustomButton';
 
 const Game: React.FC<GameProps> = ({ gameId }) => {
   const { field, setField, game, restart, isWin } = useGameState(gameId);
 
   return (
     <Styled.Container>
+      {isWin && <Styled.Span>YOU WON</Styled.Span>}
       <Field field={field} setField={setField} game={game} gameId={gameId} />
-      <Styled.Button onClick={restart}>RESTART</Styled.Button>
+      <CustomButton width='500px' onClick={restart}>
+        RESTART
+      </CustomButton>
       {isWin && <Confetti width={document.body.clientWidth} />}
     </Styled.Container>
   );

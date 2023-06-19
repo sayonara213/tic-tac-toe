@@ -43,7 +43,9 @@ export const useGameState = (gameId: string) => {
   const checkWin = async () => {
     if (field.cells.length > 0) {
       const win = field.checkWin();
-      win && setIsWin(true);
+      if (win === game.playerMove) {
+        win && setIsWin(true);
+      }
     }
   };
 
