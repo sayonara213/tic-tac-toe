@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
 
 import { CellStyled as Styled } from './Cell.styled';
-import { CellType } from '../../../models/game/cell/CellEntity';
 import { IMAGES } from '../../../constants/images';
-import { TMove } from '../../../models/game/field/FieldEntity';
-
-interface CellProps {
-  id: number;
-  type: CellType;
-  onClick: (id: number) => void;
-  move: TMove;
-}
+import { CellProps } from './Cell.types';
 
 const Cell: React.FC<CellProps> = ({ id, type, onClick, move }) => {
   const [isClicked, setIsClicked] = useState(false);

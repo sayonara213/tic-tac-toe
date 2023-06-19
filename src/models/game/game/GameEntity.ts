@@ -3,15 +3,13 @@ import { FieldEntity, TMove } from '../field/FieldEntity';
 export type TGameMode = 'single' | 'multiplayer';
 
 export class GameEntity {
-  public id: string;
   public field: FieldEntity;
   public gameMode: TGameMode;
-  public playerOne: TMove = 'circle';
-  public playerTwo: TMove = 'cross';
+  public playerMove: TMove;
 
-  constructor(id: string, field: FieldEntity, gameMode: TGameMode) {
-    this.id = id;
+  constructor(field: FieldEntity, gameMode: TGameMode, playerMove: TMove) {
     this.field = field;
     this.gameMode = gameMode;
+    this.playerMove = playerMove;
   }
 }

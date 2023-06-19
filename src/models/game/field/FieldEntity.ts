@@ -80,6 +80,8 @@ export class FieldEntity {
     if (cell?.type === 'empty' && player === this.move) {
       cell.type = this.move;
       this.move = this.move === 'circle' ? 'cross' : 'circle';
+      return true;
     }
+    return false;
   }
 }
