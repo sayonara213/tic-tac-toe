@@ -8,7 +8,7 @@ import { TMove } from '../../../models/game/field/FieldEntity';
 interface CellProps {
   id: number;
   type: CellType;
-  onClick: (id: number, type: CellType) => void;
+  onClick: (id: number) => void;
   move: TMove;
 }
 
@@ -17,7 +17,7 @@ const Cell: React.FC<CellProps> = ({ id, type, onClick, move }) => {
 
   const handleClick = () => {
     if (!isClicked) {
-      onClick(id, 'circle');
+      onClick(id);
       setIsClicked(true);
 
       setTimeout(() => {
