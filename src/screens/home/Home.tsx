@@ -6,12 +6,15 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../constants/routes';
 import { crossOrCircle } from '../../services/random';
 import { getUid } from '../../services/auth';
+import { FieldEntity } from '../../models/game/field/FieldEntity';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const uid = getUid();
 
   const createGame = async () => {
+    const field = new FieldEntity();
+    field.initField();
     const move = crossOrCircle();
     const secondMove = move === 'cross' ? 'circle' : 'cross';
     const game = await addDoc(collection(db, 'game'), {
@@ -19,6 +22,8 @@ const Home: React.FC = () => {
         { name: uid, move },
         { name: '', move: secondMove },
       ],
+      field: JSON.stringify(field.cells),
+      nextMove: 'circle',
     });
     navigate(ROUTES.game + game.id);
   };

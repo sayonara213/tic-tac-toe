@@ -4,9 +4,14 @@ import Confetti from 'react-confetti';
 import { GameProps } from './Game.types';
 import { useGameState } from './Game.state';
 import CustomButton from '../button/CustomButton';
+import Loader from '../loader/Loader';
 
 const Game: React.FC<GameProps> = ({ gameId }) => {
-  const { field, setField, game, restart, isWin } = useGameState(gameId);
+  const { field, setField, game, restart, isWin, fieldLoading } = useGameState(gameId);
+
+  if (fieldLoading) {
+    return <Loader />;
+  }
 
   return (
     <Styled.Container>
