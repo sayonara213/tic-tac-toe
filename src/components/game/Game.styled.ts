@@ -7,16 +7,13 @@ export const GameStyled = {
     justify-content: center;
     align-items: center;
   `,
-  Button: styled.button`
-    margin-top: 50px;
+  Span: styled.span`
     width: 500px;
-    height: 60px;
-    background-color: transparent;
-    border: 2px solid ${({ theme }) => theme.color.light};
+    text-align: center;
+    font-size: ${({ theme }) => theme.fontSize.xlarge};
     color: ${({ theme }) => theme.color.text};
-    font-size: 30px;
-    font-family: 'regular';
-    font-weight: bold;
-    cursor: pointer;
+    font-family: 'bold';
+
+    margin-bottom: 50px;
   `,
 };

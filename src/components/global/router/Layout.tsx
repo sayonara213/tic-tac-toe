@@ -5,6 +5,7 @@ import Header from '../header/Header';
 const Layout: React.FC = () => {
   return (
     <>
+      <Header />
       <Outlet />
     </>
   );

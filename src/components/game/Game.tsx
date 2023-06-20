@@ -1,41 +1,25 @@
-import { useState, useEffect } from 'react';
 import Field from './field/Field';
-import { FieldEntity } from '../../models/game/field/FieldEntity';
 import { GameStyled as Styled } from './Game.styled';
 import Confetti from 'react-confetti';
+import { GameProps } from './Game.types';
+import { useGameState } from './Game.state';
+import CustomButton from '../button/CustomButton';
+import Loader from '../loader/Loader';
 
-const Game: React.FC = () => {
-  const [field, setField] = useState(new FieldEntity());
-  const [isWin, setIsWin] = useState(false);
+const Game: React.FC<GameProps> = ({ gameId }) => {
+  const { field, setField, game, restart, isWin, fieldLoading } = useGameState(gameId);
 
-  useEffect(() => {
-    restart();
-  }, []);
-
-  useEffect(() => {
-    checkWin();
-  }, [field]);
-
-  const checkWin = () => {
-    if (field.cells.length > 0) {
-      const win = field.checkWin();
-      if (win) {
-        setIsWin(true);
-      }
-    }
-  };
-
-  const restart = () => {
-    setIsWin(false);
-    const newField = new FieldEntity();
-    newField.initField();
-    setField(newField);
-  };
+  if (fieldLoading) {
+    return <Loader />;
+  }
 
   return (
     <Styled.Container>
-      <Field field={field} setField={setField} />
-      <Styled.Button onClick={restart}>RESTART</Styled.Button>
+      {isWin && <Styled.Span>YOU WON</Styled.Span>}
+      <Field field={field} setField={setField} game={game} gameId={gameId} />
+      <CustomButton width='500px' onClick={restart}>
+        RESTART
+      </CustomButton>
       {isWin && <Confetti width={document.body.clientWidth} />}
     </Styled.Container>
   );

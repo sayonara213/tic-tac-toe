@@ -73,4 +73,15 @@ export class FieldEntity {
       this.move = newMove;
     }
   }
+
+  multiplayerMove(id: number, player: TMove) {
+    if (this.won !== 'empty') return;
+    const cell = this.cells.find((cell) => cell.id === id);
+    if (cell?.type === 'empty' && player === this.move) {
+      cell.type = this.move;
+      this.move = this.move === 'circle' ? 'cross' : 'circle';
+      return true;
+    }
+    return false;
+  }
 }
