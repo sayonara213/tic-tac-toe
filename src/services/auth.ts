@@ -4,13 +4,16 @@ import { IUser } from '../types/user.types';
 import { getUserFromDB } from './user';
 
 export const checkIfUserExists = async (user: IUser) => {
+  if (user.uid === '') return false;
+
   const userFromDB = await getUserFromDB(user.uid);
-  if (userFromDB === undefined && user.uid === '') return false;
 
   return userFromDB;
 };
 
-export const createUser = async () => {
+export const createUser = async (user: IUser) => {
+  console.log(user);
+
   const docRef = await addDoc(collection(db, 'users'), {});
   const userId = docRef.id;
   const userName = `User ${userId.slice(0, 5)}`;

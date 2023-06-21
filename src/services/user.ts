@@ -5,5 +5,5 @@ export const getUserFromDB = async (uid: string) => {
   if (uid === '' || uid === undefined) return undefined;
   const user = await getDoc(doc(db, 'users', uid));
 
-  return user;
+  return user.data();
 };

@@ -1,10 +1,9 @@
-import {css} from "styled-components";
+import { css } from 'styled-components';
 
 export const normalize = css`
   html {
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
-    overflow-y: scroll;
   }
 
   body {
@@ -106,25 +105,25 @@ export const normalize = css`
   }
 
   button,
-  [type="button"],
-  [type="reset"],
-  [type="submit"] {
+  [type='button'],
+  [type='reset'],
+  [type='submit'] {
     cursor: pointer;
     -webkit-appearance: button;
   }
 
   button::-moz-focus-inner,
-  [type="button"]::-moz-focus-inner,
-  [type="reset"]::-moz-focus-inner,
-  [type="submit"]::-moz-focus-inner {
+  [type='button']::-moz-focus-inner,
+  [type='reset']::-moz-focus-inner,
+  [type='submit']::-moz-focus-inner {
     border-style: none;
     padding: 0;
   }
 
   button:-moz-focusring,
-  [type="button"]:-moz-focusring,
-  [type="reset"]:-moz-focusring,
-  [type="submit"]:-moz-focusring {
+  [type='button']:-moz-focusring,
+  [type='reset']:-moz-focusring,
+  [type='submit']:-moz-focusring {
     outline: 1px dotted ButtonText;
   }
   fieldset {
@@ -148,23 +147,23 @@ export const normalize = css`
     overflow: auto;
   }
 
-  [type="checkbox"],
-  [type="radio"] {
+  [type='checkbox'],
+  [type='radio'] {
     box-sizing: border-box; /* 1 */
     padding: 0; /* 2 */
   }
 
-  [type="number"]::-webkit-inner-spin-button,
-  [type="number"]::-webkit-outer-spin-button {
+  [type='number']::-webkit-inner-spin-button,
+  [type='number']::-webkit-outer-spin-button {
     height: auto;
   }
 
-  [type="search"] {
+  [type='search'] {
     -webkit-appearance: textfield;
     outline-offset: -2px;
   }
 
-  [type="search"]::-webkit-search-decoration {
+  [type='search']::-webkit-search-decoration {
     -webkit-appearance: none;
   }
 
@@ -188,7 +187,7 @@ export const normalize = css`
   [hidden] {
     display: none;
   }
-  
+
   p {
     user-select: none;
   }
