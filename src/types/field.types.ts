@@ -2,7 +2,7 @@ import { TMove } from '../models/game/field/FieldEntity';
 
 export interface IPlayer {
   move: TMove;
-  name: string;
+  uid: string;
 }
 
 export interface IFetchField {

@@ -53,7 +53,9 @@ export const useGameState = (gameId: string) => {
   const checkPlayerMove = () => {
     if (!fetchedField) return;
     const players = fetchedField?.players;
-    const currentPlayer = players.find((player: IPlayer) => player.name === user.uid).move;
+    console.log(players);
+
+    const currentPlayer = players.find((player: IPlayer) => player.uid === user.uid).move;
     if (currentPlayer === undefined) return;
     const tempGame = new GameEntity(field, 'multiplayer', currentPlayer);
     setGame(tempGame);
@@ -82,12 +84,12 @@ export const useGameState = (gameId: string) => {
   const addPlayer = async () => {
     if (!fetchedField) return;
     const players = fetchedField?.players;
-    if (players.find((player: IPlayer) => player.name === user.uid)) return;
-    if (players[1].name !== '') {
+    if (players.find((player: IPlayer) => player.uid === user.uid)) return;
+    if (players[1].uid !== '') {
       setIsFull(true);
       return;
     }
-    players[1] = { name: user.uid, move: players[1].move };
+    players[1] = { uid: user.uid, move: players[1].move };
     await updateDoc(doc(db, 'game', gameId), {
       players,
     });

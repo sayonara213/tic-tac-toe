@@ -20,8 +20,8 @@ const Home: React.FC = () => {
     const secondMove = move === 'cross' ? 'circle' : 'cross';
     const game = await addDoc(collection(db, 'game'), {
       players: [
-        { name: user.uid, move },
-        { name: '', move: secondMove },
+        { uid: user.uid, move },
+        { uid: '', move: secondMove },
       ],
       field: JSON.stringify(field.cells),
       nextMove: 'circle',

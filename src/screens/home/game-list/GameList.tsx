@@ -32,9 +32,11 @@ const GameList: React.FC = () => {
 
   return (
     <Styled.Container>
-      {gameList.map((game) => (
-        <GameListItem game={game} key={game.id} />
-      ))}
+      <Styled.List>
+        {gameList.map((game) => (
+          <GameListItem game={game} key={game.id} />
+        ))}
+      </Styled.List>
     </Styled.Container>
   );
 };
