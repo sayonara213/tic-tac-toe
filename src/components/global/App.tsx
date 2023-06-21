@@ -10,6 +10,7 @@ import { setupStore } from '../../redux/store';
 import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
+import Main from './Main';
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
@@ -19,15 +20,13 @@ const persistor = persistStore(store);
 
 function App() {
   return (
-    <Theme>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <BrowserRouter>
-            <AppRouter />
-          </BrowserRouter>
-        </PersistGate>
-      </Provider>
-    </Theme>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <Main />
+        </BrowserRouter>
+      </PersistGate>
+    </Provider>
   );
 }
 
