@@ -11,9 +11,11 @@ import CustomInput from '../custom-input/CustomInput';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../App';
 import { updateUserName } from '../../../redux/user.slice';
+import { switchTheme } from '../../../redux/theme.slice';
 
 const Header: React.FC = () => {
   const user = useAppSelector((state) => state.user);
+  const theme = useAppSelector((state) => state.theme);
   const dispatch = useAppDispatch();
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -41,6 +43,10 @@ const Header: React.FC = () => {
     dispatch(updateUserName(userName));
   };
 
+  const handleSwitchTheme = () => {
+    dispatch(switchTheme());
+  };
+
   return (
     <Styled.Container>
       <Logo onClick={back} />
@@ -56,7 +62,7 @@ const Header: React.FC = () => {
             <Icon type='edit' onClick={handleEdit} />
           </Styled.UserContainer>
         )}
-        <Icon type='bulb' onClick={handleEdit} />
+        <Icon type={theme.isLight ? 'bulb' : 'bulbFill'} onClick={handleSwitchTheme} />
       </Styled.ParamsWrapper>
     </Styled.Container>
   );

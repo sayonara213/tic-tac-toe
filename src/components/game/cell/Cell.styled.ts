@@ -17,18 +17,18 @@ const cellColor = (move: TMove) => ({
       transform: scale(1.1);
       box-shadow: 0 0 10px ${({ theme }) => theme.color.background};
       background-color: ${({ theme }) =>
-        move === 'circle' ? theme.color.green : theme.color.yellow};
+        move === 'circle' ? theme.color.circle : theme.color.cross};
       border: 2px solid
-        ${({ theme }) => (move === 'circle' ? theme.color.green : theme.color.yellow)};
+        ${({ theme }) => (move === 'circle' ? theme.color.circle : theme.color.cross)};
     }
   `,
   circle: css`
-    background-color: ${({ theme }) => theme.color.green};
-    border: 2px solid ${({ theme }) => theme.color.green};
+    background-color: ${({ theme }) => theme.color.circle};
+    border: 2px solid ${({ theme }) => theme.color.circle};
   `,
   cross: css`
-    background-color: ${({ theme }) => theme.color.yellow};
-    border: 2px solid ${({ theme }) => theme.color.yellow};
+    background-color: ${({ theme }) => theme.color.cross};
+    border: 2px solid ${({ theme }) => theme.color.cross};
   `,
 });
 

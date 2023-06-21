@@ -7,12 +7,12 @@ const cellTypes = {
     border: 1px solid ${({ theme }) => theme.color.light};
   `,
   circle: css`
-    background-color: ${({ theme }) => theme.color.green};
-    border: 1px solid ${({ theme }) => theme.color.green};
+    background-color: ${({ theme }) => theme.color.circle};
+    border: 1px solid ${({ theme }) => theme.color.circle};
   `,
   cross: css`
-    background-color: ${({ theme }) => theme.color.yellow};
-    border: 1px solid ${({ theme }) => theme.color.yellow};
+    background-color: ${({ theme }) => theme.color.cross};
+    border: 1px solid ${({ theme }) => theme.color.cross};
   `,
 };
 

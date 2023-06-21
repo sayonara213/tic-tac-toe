@@ -3,6 +3,7 @@ import { IIconProps } from './Icon.types';
 
 import { IconStyled as Styled } from './Icon.styled';
 import { IMAGES, TIcon } from '../../../constants/images';
+import { useAppSelector } from '../../../hooks/hooks';
 
 const Icon: React.FC<IIconProps> = ({
   type,
@@ -11,13 +12,13 @@ const Icon: React.FC<IIconProps> = ({
   onClick,
   fadeIn = false,
 }) => {
-  const [isLigth, setIsLight] = useState<boolean>(false);
+  const { isLight } = useAppSelector((state) => state.theme);
 
   const handleClick = () => {
     onClick && onClick();
   };
 
-  const changedType = (isLigth ? type + 'Black' : type) as TIcon;
+  const changedType = (isLight ? type + 'Black' : type) as TIcon;
 
   return (
     <Styled.Container

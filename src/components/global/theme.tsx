@@ -3,6 +3,7 @@ import { PropsWithChildren } from 'react';
 import React from 'react';
 import { reset } from '../../constants/reset';
 import { normalize } from '../../constants/normalize';
+import { ITheme } from './theme.types';
 export const FONT_SIZE = {
   footer: '12px',
   small: '14px',
@@ -24,11 +25,23 @@ export const COLOR = {
   dark: '#3a3a3c',
   text: '#ffffff',
   light: '#c2c2c3',
-  green: '#538d4e',
+  circle: '#538d4e',
   //yellow: '#b59f3b',
-  yellow: '#b53b3b',
+  cross: '#b53b3b',
   lightSecond: '#818384',
 };
+
+export const COLOR_LIGHT = {
+  background: '#ededec',
+  dark: '#3a3a3c',
+  text: '#000000',
+  light: '#535352',
+  circle: '#4ac4c4',
+  //yellow: '#b59f3b',
+  cross: '#ac72b1',
+  lightSecond: '#818384',
+};
+
 export const BORDER_RADIUS = {
   small: '4px',
   medium: '15px',
@@ -36,25 +49,32 @@ export const BORDER_RADIUS = {
   circle: '50%',
 };
 
-export const theme = {
+export const light = {
+  fontSize: FONT_SIZE,
+  font: FONT,
+  borderRadius: BORDER_RADIUS,
+  color: COLOR_LIGHT,
+};
+
+export const dark = {
   fontSize: FONT_SIZE,
   font: FONT,
   borderRadius: BORDER_RADIUS,
   color: COLOR,
 };
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle<{ isLight: boolean }>`
   ${normalize}
   ${reset}
   body {
-    background: ${COLOR.background};
+    background: ${({ isLight }) => (isLight ? COLOR_LIGHT.background : COLOR.background)};
   }
 `;
 
-export const Theme: React.FC<PropsWithChildren> = ({ children }) => {
+export const Theme: React.FC<ITheme> = ({ children, theme }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
+    <ThemeProvider theme={theme ? light : dark}>
+      <GlobalStyle isLight={theme} />
       {children}
     </ThemeProvider>
   );

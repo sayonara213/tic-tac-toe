@@ -2,15 +2,17 @@ import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/
 import userSlice from './user.slice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
+import themeSlice from './theme.slice';
 
 const persistConfig = {
   key: 'root',
   storage: storage,
-  whitelist: ['user'],
+  whitelist: ['user', 'theme'],
 };
 
 const rootReducer = combineReducers({
   user: userSlice,
+  theme: themeSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
