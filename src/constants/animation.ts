@@ -47,3 +47,11 @@ export const redTextAnimation = keyframes`
     color: #ffffff;
   }
 `;
+
+export const fadeInAnimation = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }`;

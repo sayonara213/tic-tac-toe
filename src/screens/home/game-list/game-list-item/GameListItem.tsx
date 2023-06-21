@@ -5,7 +5,7 @@ import { GameListItemStyled as Styled } from './GameListItem.styled';
 import MiniField from '../../../../components/global/mini-field/MiniField';
 import CustomText from '../../../../components/global/custom-text/CustomText';
 import CustomButton from '../../../../components/button/CustomButton';
-import { useNavigate, useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../../../constants/routes';
 
 const GameListItem: React.FC<IGameListItemProps> = ({ game }) => {

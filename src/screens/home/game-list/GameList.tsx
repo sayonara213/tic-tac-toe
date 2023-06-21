@@ -15,10 +15,6 @@ const GameList: React.FC = () => {
     fetchGameList();
   }, []);
 
-  useEffect(() => {
-    console.log(gameList);
-  }, [gameList]);
-
   const fetchGameList = async () => {
     setIsLoading(true);
     const gameList: IFetchField[] = [];

@@ -14,11 +14,18 @@ const rotateAnimation = keyframes`
 `;
 
 export const LoaderStyled = {
-  Container: styled.div``,
+  Container: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  `,
   Field: styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
+
+    justify-items: center;
     grid-gap: 3px;
     animation-delay: 1s;
     animation: ${rotateAnimation} 2s infinite;
@@ -75,3 +82,11 @@ export const LoaderStyled = {
     text-align: center;
   `,
 };
+
+export const LoaderContainer = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+`;
