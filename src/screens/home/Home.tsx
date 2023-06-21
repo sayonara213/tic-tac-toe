@@ -5,13 +5,13 @@ import { db } from '../../components/global/App';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../constants/routes';
 import { crossOrCircle } from '../../services/random';
-import { getUid } from '../../services/auth';
 import { FieldEntity } from '../../models/game/field/FieldEntity';
 import GameList from './game-list/GameList';
+import { useAppSelector } from '../../hooks/hooks';
 
 const Home: React.FC = () => {
+  const user = useAppSelector((state) => state.user);
   const navigate = useNavigate();
-  const uid = getUid();
 
   const createGame = async () => {
     const field = new FieldEntity();
@@ -20,7 +20,7 @@ const Home: React.FC = () => {
     const secondMove = move === 'cross' ? 'circle' : 'cross';
     const game = await addDoc(collection(db, 'game'), {
       players: [
-        { name: uid, move },
+        { name: user.uid, move },
         { name: '', move: secondMove },
       ],
       field: JSON.stringify(field.cells),

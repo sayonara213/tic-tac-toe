@@ -3,11 +3,13 @@ import { useState, useEffect } from 'react';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { FieldEntity } from '../../models/game/field/FieldEntity';
 import { GameEntity } from '../../models/game/game/GameEntity';
-import { getUid } from '../../services/auth';
 import { IPlayer } from '../../types/field.types';
 import { db } from '../global/App';
+import { useAppSelector } from '../../hooks/hooks';
 
 export const useGameState = (gameId: string) => {
+  const user = useAppSelector((state) => state.user);
+
   const [game, setGame] = useState(new GameEntity(new FieldEntity(), 'multiplayer', 'circle'));
   const [field, setField] = useState(game.field);
   const [isWin, setIsWin] = useState(false);
@@ -51,7 +53,7 @@ export const useGameState = (gameId: string) => {
   const checkPlayerMove = () => {
     if (!fetchedField) return;
     const players = fetchedField?.players;
-    const currentPlayer = players.find((player: IPlayer) => player.name === getUid()).move;
+    const currentPlayer = players.find((player: IPlayer) => player.name === user.uid).move;
     if (currentPlayer === undefined) return;
     const tempGame = new GameEntity(field, 'multiplayer', currentPlayer);
     setGame(tempGame);
@@ -73,8 +75,6 @@ export const useGameState = (gameId: string) => {
   const checkIfMoved = () => {
     if (!fetchedField) return;
     const temp = JSON.parse(fetchedField?.field);
-    console.log(temp);
-
     const isMoved = temp.cells?.some((cell: any) => cell.type !== 'empty');
     return isMoved;
   };
@@ -82,12 +82,12 @@ export const useGameState = (gameId: string) => {
   const addPlayer = async () => {
     if (!fetchedField) return;
     const players = fetchedField?.players;
-    if (players.find((player: IPlayer) => player.name === getUid())) return;
+    if (players.find((player: IPlayer) => player.name === user.uid)) return;
     if (players[1].name !== '') {
       setIsFull(true);
       return;
     }
-    players[1] = { name: getUid(), move: players[1].move };
+    players[1] = { name: user.uid, move: players[1].move };
     await updateDoc(doc(db, 'game', gameId), {
       players,
     });
