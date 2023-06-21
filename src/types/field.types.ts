@@ -6,6 +6,9 @@ export interface IPlayer {
 }
 
 export interface IFetchField {
+  id: string;
   field: string;
   players: IPlayer[];
+  nextMove: TMove;
+  date: Date;
 }

@@ -26,9 +26,8 @@ const buttonTypes = () => ({
 
 export const CustomButtonStyled = {
   Button: styled.button<ICustomButtonStyledProps>`
-    margin-top: 50px;
-    width: 500px;
-    height: 60px;
+    width: ${({ width }) => width};
+    height: ${({ height }) => height};
     background-color: transparent;
     font-size: 30px;
 

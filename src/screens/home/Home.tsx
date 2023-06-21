@@ -7,6 +7,7 @@ import { ROUTES } from '../../constants/routes';
 import { crossOrCircle } from '../../services/random';
 import { getUid } from '../../services/auth';
 import { FieldEntity } from '../../models/game/field/FieldEntity';
+import GameList from './game-list/GameList';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ const Home: React.FC = () => {
       ],
       field: JSON.stringify(field.cells),
       nextMove: 'circle',
+      date: new Date(),
     });
     navigate(ROUTES.game + game.id);
   };
@@ -31,6 +33,7 @@ const Home: React.FC = () => {
   return (
     <Styled.Container>
       <button onClick={createGame}>Start game</button>
+      <GameList />
     </Styled.Container>
   );
 };
