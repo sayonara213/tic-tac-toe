@@ -9,31 +9,31 @@ export const LogoStyled = {
     cursor: pointer;
     &:hover {
       & > span:nth-child(1) {
-        animation: ${greenTextAnimation} 0.5s infinite 0.1s;
+        animation: ${({ theme }) => greenTextAnimation(theme.color)} 0.5s infinite 0.1s;
       }
       & > span:nth-child(2) {
-        animation: ${redTextAnimation} 0.5s infinite 0.2s;
+        animation: ${({ theme }) => redTextAnimation(theme.color)} 0.5s infinite 0.2s;
       }
       & > span:nth-child(3) {
-        animation: ${greenTextAnimation} 0.5s infinite 0.8s;
+        animation: ${({ theme }) => greenTextAnimation(theme.color)} 0.5s infinite 0.8s;
       }
       & > span:nth-child(4) {
-        animation: ${redTextAnimation} 0.5s infinite 0.4s;
+        animation: ${({ theme }) => redTextAnimation(theme.color)} 0.5s infinite 0.4s;
       }
       & > span:nth-child(5) {
-        animation: ${greenTextAnimation} 0.5s infinite 0.5s;
+        animation: ${({ theme }) => greenTextAnimation(theme.color)} 0.5s infinite 0.5s;
       }
       & > span:nth-child(6) {
-        animation: ${redTextAnimation} 0.5s infinite 0.1s;
+        animation: ${({ theme }) => redTextAnimation(theme.color)} 0.5s infinite 0.1s;
       }
       & > span:nth-child(7) {
-        animation: ${greenTextAnimation} 0.5s infinite 0.7s;
+        animation: ${({ theme }) => greenTextAnimation(theme.color)} 0.5s infinite 0.7s;
       }
       & > span:nth-child(8) {
-        animation: ${redTextAnimation} 0.5s infinite 0.2s;
+        animation: ${({ theme }) => redTextAnimation(theme.color)} 0.5s infinite 0.2s;
       }
       & > span:nth-child(9) {
-        animation: ${greenTextAnimation} 0.5s infinite 0.9s;
+        animation: ${({ theme }) => greenTextAnimation(theme.color)} 0.5s infinite 0.9s;
       }
     }
   `,

@@ -6,6 +6,7 @@ export const GameStyled = {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 5px;
   `,
   Span: styled.span`
     width: 500px;

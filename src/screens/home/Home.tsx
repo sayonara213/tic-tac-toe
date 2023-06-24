@@ -8,6 +8,7 @@ import { crossOrCircle } from '../../services/random';
 import { FieldEntity } from '../../models/game/field/FieldEntity';
 import GameList from './game-list/GameList';
 import { useAppSelector } from '../../hooks/hooks';
+import CustomButton from '../../components/button/CustomButton';
 
 const Home: React.FC = () => {
   const user = useAppSelector((state) => state.user);
@@ -20,8 +21,8 @@ const Home: React.FC = () => {
     const secondMove = move === 'cross' ? 'circle' : 'cross';
     const game = await addDoc(collection(db, 'game'), {
       players: [
-        { name: user.uid, move },
-        { name: '', move: secondMove },
+        { uid: user.uid, move, winCount: 0 },
+        { uid: '', move: secondMove, winCount: 0 },
       ],
       field: JSON.stringify(field.cells),
       nextMove: 'circle',
@@ -32,7 +33,9 @@ const Home: React.FC = () => {
 
   return (
     <Styled.Container>
-      <button onClick={createGame}>Start game</button>
+      <CustomButton onClick={createGame} width='30%'>
+        Start game
+      </CustomButton>
       <GameList />
     </Styled.Container>
   );

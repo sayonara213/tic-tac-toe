@@ -26,15 +26,13 @@ const GameList: React.FC = () => {
     setIsLoading(false);
   };
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
   return (
     <Styled.Container>
-      {gameList.map((game) => (
-        <GameListItem game={game} key={game.id} />
-      ))}
+      <Styled.List>
+        {gameList.map((game) => (
+          <GameListItem game={game} key={game.id} />
+        ))}
+      </Styled.List>
     </Styled.Container>
   );
 };

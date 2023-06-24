@@ -5,10 +5,16 @@ export interface ICustomTextProps {
   color?: keyof typeof COLOR;
   fontSize?: keyof typeof FONT_SIZE;
   fontFamily?: keyof typeof FONT;
+  width?: string;
+  height?: string;
+  textAlign?: string;
 }
 
 export interface ICustomTextStyles {
   color: keyof typeof COLOR;
   fontSize: keyof typeof FONT_SIZE;
   fontFamily: keyof typeof FONT;
+  width: string;
+  height: string;
+  textAlign: string;
 }
