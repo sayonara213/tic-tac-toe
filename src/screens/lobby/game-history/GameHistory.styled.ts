@@ -6,12 +6,17 @@ export const GameHistoryStyled = {
     height: 555px;
   `,
   List: styled.div`
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
     overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   `,
   Item: styled.div`
     display: flex;

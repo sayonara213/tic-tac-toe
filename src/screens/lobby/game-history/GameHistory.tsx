@@ -19,6 +19,9 @@ const GameHistory: React.FC<IGameHistoryProps> = ({ gameId, players }) => {
   return (
     <Styled.Container>
       <Score players={players} />
+      <CustomText fontFamily='medium' fontSize='large'>
+        History:
+      </CustomText>
       <Styled.List>
         {fetchedHistory?.map((history: IHistory) => (
           <GameHistoryItem

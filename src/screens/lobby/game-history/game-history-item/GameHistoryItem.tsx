@@ -23,7 +23,9 @@ const GameHistoryItem: React.FC<IGameHistoryItemProps> = ({ winColor, player, da
   return (
     <Styled.Container>
       <CustomText>{fetchedPlayer.userName}</CustomText>
-      <Icon type={winColor} />
+      <Styled.IconWrap type={winColor}>
+        <Icon type={winColor} />
+      </Styled.IconWrap>
     </Styled.Container>
   );
 };
