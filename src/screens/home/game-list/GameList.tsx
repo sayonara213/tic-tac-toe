@@ -26,10 +26,6 @@ const GameList: React.FC = () => {
     setIsLoading(false);
   };
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
   return (
     <Styled.Container>
       <Styled.List>

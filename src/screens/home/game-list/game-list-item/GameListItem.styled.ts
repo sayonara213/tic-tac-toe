@@ -72,8 +72,8 @@ export const GameListItemStyled = {
     border-radius: 5px;
   `,
   SkeletonField: styled.div`
-    width: 84px;
-    height: 84px;
+    width: 87px;
+    height: 87px;
     background: linear-gradient(
       90deg,
       ${({ theme }) => theme.color.background} 0px,

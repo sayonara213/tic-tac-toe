@@ -12,3 +12,9 @@ export interface IFetchField {
   nextMove: TMove;
   date: Date;
 }
+
+export interface IHistory {
+  move: TMove;
+  timestamp: Date;
+  winner: string;
+}

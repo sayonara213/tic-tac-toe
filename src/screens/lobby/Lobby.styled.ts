@@ -7,5 +7,12 @@ export const LobbyStyled = {
     align-items: center;
     height: 100vh;
     width: 100%;
+
+    padding: 0 50px;
+    box-sizing: border-box;
+  `,
+  HistoryContainer: styled.div`
+    position: absolute;
+    right: 50px;
   `,
 };

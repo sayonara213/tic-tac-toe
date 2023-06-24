@@ -1,13 +1,13 @@
-import { doc, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
-import { FieldEntity } from '../../models/game/field/FieldEntity';
+import { FieldEntity, TMove } from '../../models/game/field/FieldEntity';
 import { GameEntity } from '../../models/game/game/GameEntity';
 import { IPlayer } from '../../types/field.types';
 import { db } from '../global/App';
 import { useAppSelector } from '../../hooks/hooks';
 
-export const useGameState = (gameId: string) => {
+export const useGameState = (gameId: string, setPlayers: any) => {
   const user = useAppSelector((state) => state.user);
 
   const [game, setGame] = useState(new GameEntity(new FieldEntity(), 'multiplayer', 'circle'));
@@ -27,6 +27,7 @@ export const useGameState = (gameId: string) => {
 
   useEffect(() => {
     fetchMultiplayer();
+    handleSetPlayers();
   }, [fetchedField]);
 
   const fetchMultiplayer = () => {
@@ -40,21 +41,38 @@ export const useGameState = (gameId: string) => {
   };
 
   const checkWin = async (tempField: FieldEntity) => {
-    if (tempField.cells.length > 0) {
+    if (tempField.cells.length > 0 && isWin === false) {
       const win = tempField.checkWin();
       if (win === game.playerMove) {
         setIsWin(true);
+        saveWin(game.playerMove, user.uid);
       } else {
         setIsWin(false);
       }
     }
   };
 
+  const saveWin = async (move: TMove, winner: string) => {
+    console.log(fetchedField?.isWin);
+
+    if (fetchedField?.isWin) return;
+    const players = findPlayers();
+    const winnerPlayerIndex = players.findIndex((player: IPlayer) => player.uid === winner);
+    players[winnerPlayerIndex].winCount = players[winnerPlayerIndex].winCount + 1;
+    await updateDoc(doc(db, 'game', gameId), {
+      players,
+      isWin: true,
+    });
+    await addDoc(collection(gameRef, 'history'), {
+      winner,
+      move,
+      timestamp: new Date(),
+    });
+  };
+
   const checkPlayerMove = () => {
     if (!fetchedField) return;
     const players = fetchedField?.players;
-    console.log(players);
-
     const currentPlayer = players.find((player: IPlayer) => player.uid === user.uid).move;
     if (currentPlayer === undefined) return;
     const tempGame = new GameEntity(field, 'multiplayer', currentPlayer);
@@ -69,6 +87,7 @@ export const useGameState = (gameId: string) => {
       await updateDoc(doc(db, 'game', gameId), {
         field: JSON.stringify(newField.cells),
         nextMove: 'circle',
+        isWin: false,
       });
     }
     setField(newField);
@@ -82,17 +101,27 @@ export const useGameState = (gameId: string) => {
   };
 
   const addPlayer = async () => {
-    if (!fetchedField) return;
-    const players = fetchedField?.players;
+    const players = findPlayers();
     if (players.find((player: IPlayer) => player.uid === user.uid)) return;
     if (players[1].uid !== '') {
       setIsFull(true);
       return;
     }
-    players[1] = { uid: user.uid, move: players[1].move };
+    players[1] = { uid: user.uid, move: players[1].move, winCount: 0 };
     await updateDoc(doc(db, 'game', gameId), {
       players,
     });
+  };
+
+  const findPlayers = () => {
+    if (!fetchedField) return;
+    const players = fetchedField?.players;
+    return players;
+  };
+
+  const handleSetPlayers = () => {
+    const players = findPlayers();
+    setPlayers(players);
   };
 
   return {

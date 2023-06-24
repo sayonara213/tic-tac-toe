@@ -6,5 +6,8 @@ export const CustomTextStyled = {
     font-size: ${({ theme, fontSize }) => theme.fontSize[fontSize]};
     color: ${({ theme, color }) => theme.color[color]};
     font-family: ${({ theme, fontFamily }) => theme.font[fontFamily]};
+    width: ${({ width }) => width};
+    height: ${({ height }) => height};
+    text-align: ${({ textAlign }) => textAlign};
   `,
 };

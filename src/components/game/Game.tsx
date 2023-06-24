@@ -6,8 +6,8 @@ import { useGameState } from './Game.state';
 import CustomButton from '../button/CustomButton';
 import Loader from '../loader/Loader';
 
-const Game: React.FC<GameProps> = ({ gameId }) => {
-  const { field, setField, game, restart, isWin, fieldLoading } = useGameState(gameId);
+const Game: React.FC<GameProps> = ({ gameId, setPlayers }) => {
+  const { field, setField, game, restart, isWin, fieldLoading } = useGameState(gameId, setPlayers);
 
   if (fieldLoading) {
     return <Loader />;
