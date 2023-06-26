@@ -18,6 +18,8 @@ import doneBlack from '../assets/icons/done-black.svg';
 export const IMAGES = {
   circle,
   cross,
+  circleBlack: circle,
+  crossBlack: cross,
   bulb,
   bulbFill,
   edit,

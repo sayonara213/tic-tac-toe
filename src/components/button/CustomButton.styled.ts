@@ -1,11 +1,15 @@
 import styled, { css } from 'styled-components';
-import { ICustomButtonProps, ICustomButtonStyledProps } from './CustomButton.types';
+import { ICustomButtonStyledProps } from './CustomButton.types';
 
 const buttonTypes = () => ({
   primary: css`
     background-color: ${({ theme }) => theme.color.background};
     color: ${({ theme }) => theme.color.text};
     border: 2px solid ${({ theme }) => theme.color.light};
+
+    &:hover {
+      transform: translateY(-2px);
+    }
   `,
   secondary: css`
     background-color: ${({ theme }) => theme.color.light};
@@ -26,26 +30,23 @@ const buttonTypes = () => ({
 
 export const CustomButtonStyled = {
   Button: styled.button<ICustomButtonStyledProps>`
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     width: ${({ width }) => width};
     height: ${({ height }) => height};
     background-color: transparent;
     font-size: 30px;
+    text-transform: uppercase;
 
     transition: all 0.1s ease-in-out;
-
-    &:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 10px ${({ theme }) => theme.color.background};
-    }
-
-    &:active {
-      transform: scale(1);
-    }
 
     ${({ buttonType }) => buttonTypes()[buttonType]}
   `,
   Span: styled.span`
     font-size: ${({ theme }) => theme.fontSize.big};
-    font-family: 'bold';
+    font-family: 'medium';
   `,
 };
