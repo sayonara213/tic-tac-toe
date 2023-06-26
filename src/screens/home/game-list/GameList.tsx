@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { IFetchField } from '../../../types/field.types';
 
 import { GameListStyled as Styled } from './GameList.styled';
-import { collection, doc, getDocs, orderBy, query } from 'firebase/firestore';
+import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '../../../components/global/App';
 import GameListItem from './game-list-item/GameListItem';
-import Loader from '../../../components/loader/Loader';
+import { useAppSelector } from '../../../hooks/hooks';
+import { IPlayer } from '../../../types/user.types';
 
 const GameList: React.FC = () => {
+  const user = useAppSelector((state) => state.user);
   const [gameList, setGameList] = useState<IFetchField[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -20,7 +22,10 @@ const GameList: React.FC = () => {
     const gameList: IFetchField[] = [];
     const querySnapshot = await getDocs(query(collection(db, 'game'), orderBy('date', 'desc')));
     querySnapshot.forEach((doc) => {
-      gameList.push({ id: doc.id, ...(doc.data() as Omit<IFetchField, 'id'>) });
+      const players = doc.data().players;
+      if (players.some((player: IPlayer) => player.uid === user.uid)) {
+        gameList.push({ id: doc.id, ...(doc.data() as Omit<IFetchField, 'id'>) });
+      }
     });
     setGameList(gameList);
     setIsLoading(false);

@@ -20,6 +20,10 @@ export const useGameState = (gameId: string, setPlayers: any) => {
   const [fetchedField, fieldLoading, fieldError, snapshot] = useDocumentData<any>(gameRef);
 
   useEffect(() => {
+    fetchMultiplayer();
+  }, [game]);
+
+  useEffect(() => {
     if (fieldLoading) return;
     addPlayer();
     checkPlayerMove();
@@ -36,13 +40,15 @@ export const useGameState = (gameId: string, setPlayers: any) => {
     const newField = new FieldEntity();
     newField.cells = temp;
     newField.move = fetchedField?.nextMove;
-    checkWin(newField);
     setField(newField);
+
+    checkWin(newField);
   };
 
   const checkWin = async (tempField: FieldEntity) => {
-    if (tempField.cells.length > 0 && isWin === false) {
+    if (tempField.cells.length > 0) {
       const win = tempField.checkWin();
+      console.log('checking win', game);
       if (win === game.playerMove) {
         setIsWin(true);
         saveWin(game.playerMove, user.uid);
@@ -53,8 +59,6 @@ export const useGameState = (gameId: string, setPlayers: any) => {
   };
 
   const saveWin = async (move: TMove, winner: string) => {
-    console.log(fetchedField?.isWin);
-
     if (fetchedField?.isWin) return;
     const players = findPlayers();
     const winnerPlayerIndex = players.findIndex((player: IPlayer) => player.uid === winner);
@@ -73,9 +77,11 @@ export const useGameState = (gameId: string, setPlayers: any) => {
   const checkPlayerMove = () => {
     if (!fetchedField) return;
     const players = fetchedField?.players;
-    const currentPlayer = players.find((player: IPlayer) => player.uid === user.uid).move;
+    const currentPlayer = players.find((player: IPlayer) => player.uid === user.uid);
     if (currentPlayer === undefined) return;
-    const tempGame = new GameEntity(field, 'multiplayer', currentPlayer);
+    const tempGame = new GameEntity(field, 'multiplayer', currentPlayer.move);
+    console.log('checked player move', tempGame);
+
     setGame(tempGame);
   };
 
