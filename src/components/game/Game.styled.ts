@@ -2,6 +2,10 @@ import styled from 'styled-components';
 
 export const GameStyled = {
   Container: styled.div`
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -9,7 +13,7 @@ export const GameStyled = {
     gap: 5px;
   `,
   Span: styled.span`
-    width: 500px;
+    width: 100%;
     text-align: center;
     font-size: ${({ theme }) => theme.fontSize.xlarge};
     color: ${({ theme }) => theme.color.text};

@@ -34,8 +34,7 @@ export const GameListItemStyled = {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid ${({ theme }) => theme.color.light};
-    border-bottom: none;
+    border-bottom: 1px solid ${({ theme }) => theme.color.light};
     box-sizing: border-box;
 
     &:first-child {

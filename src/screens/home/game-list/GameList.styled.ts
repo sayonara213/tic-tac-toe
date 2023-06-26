@@ -7,8 +7,7 @@ export const GameListStyled = {
     max-height: 500px;
     overflow-y: scroll;
 
-    border-bottom: 1px solid ${({ theme }) => theme.color.light};
-    border-top: 1px solid ${({ theme }) => theme.color.light};
+    border: 1px solid ${({ theme }) => theme.color.light};
 
     &::-webkit-scrollbar {
       width: 10px;
@@ -17,6 +16,11 @@ export const GameListStyled = {
 
     &::-webkit-scrollbar-thumb {
       background-color: ${({ theme }) => theme.color.lightSecond};
+    }
+
+    @media screen and (max-width: 768px) {
+      width: 100%;
+      min-width: 300px;
     }
   `,
   List: styled.div`

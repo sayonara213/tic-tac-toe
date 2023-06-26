@@ -9,8 +9,15 @@ export const HomeStyled = {
     justify-content: center;
     align-items: center;
     gap: 50px;
-    height: 100vh;
+    height: calc(100vh - 80px);
     width: 100%;
+
+    @media screen and (max-width: 768px) {
+      margin-top: 24px;
+      height: auto;
+      padding: 0 16px;
+      margin-bottom: 24px;
+    }
   `,
   Interactions: styled.div`
     width: 30%;
@@ -21,6 +28,11 @@ export const HomeStyled = {
     justify-content: center;
     align-items: center;
     gap: 15px;
+
+    @media screen and (max-width: 768px) {
+      width: 100%;
+      min-width: 300px;
+    }
   `,
   JoinGameWrap: styled.div`
     width: 100%;

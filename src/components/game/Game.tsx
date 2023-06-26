@@ -17,7 +17,7 @@ const Game: React.FC<GameProps> = ({ gameId, setPlayers }) => {
     <Styled.Container>
       {isWin && <Styled.Span>YOU WON</Styled.Span>}
       <Field field={field} setField={setField} game={game} gameId={gameId} />
-      <CustomButton width='500px' onClick={restart}>
+      <CustomButton width='100%' onClick={restart}>
         RESTART
       </CustomButton>
       {isWin && <Confetti width={document.body.clientWidth} />}
