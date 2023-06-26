@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { HomeStyled as Styled } from './Home.styled';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../../components/global/App';
@@ -9,10 +9,13 @@ import { FieldEntity } from '../../models/game/field/FieldEntity';
 import GameList from './game-list/GameList';
 import { useAppSelector } from '../../hooks/hooks';
 import CustomButton from '../../components/button/CustomButton';
+import CustomInput from '../../components/global/custom-input/CustomInput';
 
 const Home: React.FC = () => {
   const user = useAppSelector((state) => state.user);
   const navigate = useNavigate();
+
+  const [gameId, setGameId] = useState<string>('');
 
   const createGame = async () => {
     const field = new FieldEntity();
@@ -31,11 +34,22 @@ const Home: React.FC = () => {
     navigate(ROUTES.game + game.id);
   };
 
+  const joinGame = () => {
+    if (!gameId) return;
+    navigate(ROUTES.game + gameId);
+  };
+
   return (
     <Styled.Container>
-      <CustomButton onClick={createGame} width='30%'>
-        Start game
-      </CustomButton>
+      <Styled.Interactions>
+        <CustomButton onClick={createGame} width='100%'>
+          Start game
+        </CustomButton>
+        <Styled.JoinGameWrap>
+          <CustomInput value={gameId} onChange={setGameId} placeholder='Game ID...' />
+          <CustomButton onClick={joinGame}>JOIN</CustomButton>
+        </Styled.JoinGameWrap>
+      </Styled.Interactions>
       <GameList />
     </Styled.Container>
   );

@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const GameListStyled = {
   Container: styled.div`
     width: 30%;
-    min-width: 300px;
-    max-height: 800px;
+    min-width: 400px;
+    max-height: 500px;
     overflow-y: scroll;
 
     border-bottom: 1px solid ${({ theme }) => theme.color.light};

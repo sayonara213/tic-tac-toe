@@ -8,7 +8,7 @@ import CustomButton from '../../../../components/button/CustomButton';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../../../constants/routes';
 import { IUser } from '../../../../types/user.types';
-import { collection, doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../../../components/global/App';
 
 const GameListItem: React.FC<IGameListItemProps> = ({ game }) => {
