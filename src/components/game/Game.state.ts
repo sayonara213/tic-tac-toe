@@ -99,6 +99,10 @@ export const useGameState = (gameId: string, setPlayers: any) => {
     setField(newField);
   };
 
+  const handleRestart = () => {
+    restart();
+  };
+
   const checkIfMoved = () => {
     if (!fetchedField) return;
     const temp = JSON.parse(fetchedField?.field);
@@ -134,7 +138,7 @@ export const useGameState = (gameId: string, setPlayers: any) => {
     game,
     field,
     isWin,
-    restart,
+    handleRestart,
     setField,
     fieldLoading,
   };
