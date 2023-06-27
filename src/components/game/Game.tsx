@@ -7,7 +7,10 @@ import CustomButton from '../button/CustomButton';
 import Loader from '../loader/Loader';
 
 const Game: React.FC<GameProps> = ({ gameId, setPlayers }) => {
-  const { field, setField, game, restart, isWin, fieldLoading } = useGameState(gameId, setPlayers);
+  const { field, setField, game, handleRestart, isWin, fieldLoading } = useGameState(
+    gameId,
+    setPlayers,
+  );
 
   if (fieldLoading) {
     return <Loader />;
@@ -17,7 +20,7 @@ const Game: React.FC<GameProps> = ({ gameId, setPlayers }) => {
     <Styled.Container>
       {isWin && <Styled.Span>YOU WON</Styled.Span>}
       <Field field={field} setField={setField} game={game} gameId={gameId} />
-      <CustomButton width='100%' onClick={restart}>
+      <CustomButton width='100%' onClick={handleRestart}>
         RESTART
       </CustomButton>
       {isWin && <Confetti width={document.body.clientWidth} />}
