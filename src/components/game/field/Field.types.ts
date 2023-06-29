@@ -4,7 +4,8 @@ import { GameEntity } from '../../../models/game/game/GameEntity';
 export interface FieldProps {
   field: FieldEntity;
   setField: (field: FieldEntity) => void;
-  playerMove: TMove;
-  gameId: string;
+  playerMove?: TMove;
+  gameId?: string;
   canMove: boolean;
+  isMultiplayer: boolean;
 }

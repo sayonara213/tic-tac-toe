@@ -10,6 +10,7 @@ import { setUser } from '../../../redux/user.slice';
 import { checkIfUserExists, createUser } from '../../../services/auth';
 import Loader from '../../loader/Loader';
 import { LoaderContainer } from '../../loader/Loader.styled';
+import SinglePlayer from '../../single-player/SinglePlayer';
 
 const AppRouter: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -45,6 +46,7 @@ const AppRouter: React.FC = () => {
       <Route path='/' element={<Layout />}>
         <Route path={ROUTES.home} element={<Home />} />
         <Route path={ROUTES.game + ':id'} element={<Lobby />} />
+        <Route path={ROUTES.single} element={<SinglePlayer />} />
       </Route>
     </Routes>
   );

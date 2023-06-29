@@ -24,6 +24,7 @@ const Game: React.FC<GameProps> = ({ gameId, setPlayers }) => {
         playerMove={playerMove}
         gameId={gameId}
         canMove={isFull}
+        isMultiplayer={true}
       />
       <CustomButton width='100%' onClick={handleRestart}>
         RESTART

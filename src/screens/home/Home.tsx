@@ -10,12 +10,7 @@ import GameList from './game-list/GameList';
 import { useAppSelector } from '../../hooks/hooks';
 import CustomButton from '../../components/button/CustomButton';
 import CustomInput from '../../components/global/custom-input/CustomInput';
-import {
-  notifyEndProgress,
-  notifyError,
-  notifyProgress,
-  notifySuccess,
-} from '../../services/banners';
+import { notifyEndProgress, notifyError, notifyProgress } from '../../services/banners';
 
 const Home: React.FC = () => {
   const user = useAppSelector((state) => state.user);
@@ -62,11 +57,18 @@ const Home: React.FC = () => {
     navigate(ROUTES.game + gameId);
   };
 
+  const startSingleplayer = () => {
+    navigate(ROUTES.single);
+  };
+
   return (
     <Styled.Container>
       <Styled.Interactions>
+        <CustomButton onClick={startSingleplayer} width='100%'>
+          Start singleplayer
+        </CustomButton>
         <CustomButton onClick={createGame} width='100%'>
-          Start game
+          Start online
         </CustomButton>
         <Styled.JoinGameWrap>
           <CustomInput value={gameId} onChange={setGameId} placeholder='Game ID...' />
