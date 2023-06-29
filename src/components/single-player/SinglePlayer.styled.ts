@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const LobbyStyled = {
+export const SinglePlayerStyled = {
   Container: styled.div`
     display: flex;
     justify-content: center;
@@ -17,24 +17,15 @@ export const LobbyStyled = {
       padding: 16px;
     }
   `,
-  GameContainer: styled.div`
+  GameWrapper: styled.div`
     width: 100%;
+    height: 100%;
+    max-width: 500px;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  `,
-  HistoryContainer: styled.div`
-    position: absolute;
-    right: 50px;
-    top: 195px;
-
-    @media screen and (max-width: 1200px) {
-      position: relative;
-      margin-top: 20px;
-      max-width: 500px;
-      right: 0;
-      top: 0;
-    }
+    gap: 5px;
   `,
 };

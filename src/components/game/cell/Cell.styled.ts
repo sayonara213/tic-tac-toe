@@ -40,6 +40,7 @@ export const CellStyled = {
     cursor: pointer;
     font-size: 50px;
     font-weight: bold;
+    border-radius: 5px;
 
     transition: all 0.1s ease-in-out;
 

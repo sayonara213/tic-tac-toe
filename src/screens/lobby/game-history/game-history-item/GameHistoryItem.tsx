@@ -18,7 +18,7 @@ const GameHistoryItem: React.FC<IGameHistoryItemProps> = ({ winColor, player, da
 
   useEffect(() => {
     fetchPlayer();
-  }, []);
+  }, [player]);
 
   return (
     <Styled.Container>

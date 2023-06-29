@@ -40,6 +40,7 @@ export const CustomButtonStyled = {
     background-color: transparent;
     font-size: 30px;
     text-transform: uppercase;
+    border-radius: 5px;
 
     transition: all 0.1s ease-in-out;
 

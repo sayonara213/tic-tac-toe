@@ -7,17 +7,28 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../global/App';
 import { FieldProps } from './Field.types';
 
-const Field: React.FC<FieldProps> = ({ field, setField, game, gameId }) => {
+const Field: React.FC<FieldProps> = ({
+  field,
+  setField,
+  playerMove,
+  gameId,
+  canMove,
+  isMultiplayer,
+}) => {
   const setCellType = async (id: number) => {
     const newField = new FieldEntity();
     newField.copy(field);
-    const isMoved = newField.multiplayerMove(id, game.playerMove);
-    isMoved && (await handleMultiplayerMove());
+    if (isMultiplayer) {
+      const isMoved = newField.multiplayerMove(id, playerMove!);
+      isMoved && (await handleMultiplayerMove());
+    } else {
+      newField.playerMove(id);
+    }
     setField(newField);
   };
 
   const handleMultiplayerMove = async () => {
-    await updateDoc(doc(db, 'game', gameId), {
+    await updateDoc(doc(db, 'game', gameId!), {
       field: JSON.stringify(field.cells),
       nextMove: field?.move === 'circle' ? 'cross' : 'circle',
     });
@@ -31,7 +42,7 @@ const Field: React.FC<FieldProps> = ({ field, setField, game, gameId }) => {
           type={cell.type}
           id={cell.id}
           onClick={setCellType}
-          move={game.playerMove}
+          move={isMultiplayer ? playerMove! : field.move}
         />
       ))}
     </Styled.Container>
