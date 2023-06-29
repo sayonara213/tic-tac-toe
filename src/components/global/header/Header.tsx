@@ -34,7 +34,7 @@ const Header: React.FC = () => {
 
   const saveUserName = async () => {
     setIsEditing(false);
-    if (userName === '' || userName === user.userName) {
+    if (userName === '' || userName === user.userName || userName.length > 20) {
       return;
     }
     await updateDoc(doc(db, 'users', user.uid), {

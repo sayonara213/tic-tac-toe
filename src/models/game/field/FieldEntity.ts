@@ -45,6 +45,7 @@ export class FieldEntity {
   }
 
   checkWin() {
+    if (this.cells.length === 0) return false;
     if (this.cells.every((cell) => cell.type !== 'empty')) {
       this.won = 'draw';
       return 'draw';

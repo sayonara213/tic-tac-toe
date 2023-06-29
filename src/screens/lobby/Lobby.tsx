@@ -3,9 +3,8 @@ import { LobbyStyled as Styled } from './Lobby.styled';
 import Game from '../../components/game/Game';
 import GameHistory from './game-history/GameHistory';
 import { IPlayer } from '../../types/user.types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Score from './game-history/score/Score';
-import Loader from '../../components/loader/Loader';
 
 const Lobby: React.FC = () => {
   const { id } = useParams();
@@ -14,8 +13,8 @@ const Lobby: React.FC = () => {
 
   return (
     <Styled.Container>
+      <Score players={players} />
       <Styled.GameContainer>
-        <Score players={players} />
         <Game gameId={id!} setPlayers={setPlayers} />
       </Styled.GameContainer>
       <Styled.HistoryContainer>

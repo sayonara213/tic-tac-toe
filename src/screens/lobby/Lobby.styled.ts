@@ -4,6 +4,7 @@ export const LobbyStyled = {
   Container: styled.div`
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
     height: calc(100vh - 80px);
     width: 100%;
@@ -12,7 +13,6 @@ export const LobbyStyled = {
 
     @media screen and (max-width: 1200px) {
       margin-top: 50px;
-      flex-direction: column;
       height: auto;
       padding: 16px;
     }
@@ -27,12 +27,14 @@ export const LobbyStyled = {
   HistoryContainer: styled.div`
     position: absolute;
     right: 50px;
+    top: 195px;
 
     @media screen and (max-width: 1200px) {
       position: relative;
       margin-top: 20px;
       max-width: 500px;
       right: 0;
+      top: 0;
     }
   `,
 };
