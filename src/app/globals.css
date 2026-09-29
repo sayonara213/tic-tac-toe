@@ -1,0 +1,230 @@
+@import 'tailwindcss';
+
+/* Lagoon tokens (styleguide: https://claude.ai/artifact/2UthP4dDK4i4Brfr3qiYpy).
+   Night is the default theme; Day applies with data-theme="day" on <html>.
+   The 2048 tile scale is mapped onto the board: O sits on light foam, X on deep
+   channel water, and a winning line surfaces as pearl. The two marks differ in
+   lightness and shape, not hue alone. */
+
+:root {
+  color-scheme: dark;
+  --ground-000: #07161d;
+  --ground-100: #0e2a33;
+  --glow-teal: rgba(38, 150, 140, 0.55);
+  --glow-sea: rgba(30, 96, 150, 0.5);
+  --glow-kelp: rgba(70, 150, 110, 0.35);
+  --glass: rgba(170, 230, 225, 0.07);
+  --glass-raised: rgba(170, 230, 225, 0.11);
+  --glass-edge: rgba(200, 245, 240, 0.16);
+  --well: rgba(4, 20, 26, 0.45);
+  --ink: #e6f6f3;
+  --ink-muted: #9cc3c0;
+  --accent: #7fe0c4;
+  --on-accent: #06231f;
+  --danger: #ffb4a8;
+  --shadow-glass: 0 24px 60px rgba(0, 10, 14, 0.45);
+}
+
+:root[data-theme='day'] {
+  color-scheme: light;
+  --ground-000: #e9f4f2;
+  --ground-100: #d6ebe8;
+  --glow-teal: rgba(94, 205, 190, 0.45);
+  --glow-sea: rgba(120, 180, 230, 0.4);
+  --glow-kelp: rgba(160, 220, 170, 0.4);
+  --glass: rgba(255, 255, 255, 0.55);
+  --glass-raised: rgba(255, 255, 255, 0.72);
+  --glass-edge: rgba(12, 60, 70, 0.12);
+  --well: rgba(12, 70, 80, 0.08);
+  --ink: #0c2a30;
+  --ink-muted: #3f6668;
+  --accent: #127f6c;
+  --on-accent: #ffffff;
+  --danger: #a3261a;
+  --shadow-glass: 0 24px 60px rgba(20, 70, 80, 0.14);
+}
+
+@theme inline {
+  --color-ground-000: var(--ground-000);
+  --color-ground-100: var(--ground-100);
+  --color-glass: var(--glass);
+  --color-glass-raised: var(--glass-raised);
+  --color-glass-edge: var(--glass-edge);
+  --color-well: var(--well);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-danger: var(--danger);
+
+  /* Marks (theme independent, like the tile scale) */
+  --color-o-fill: #8edbc6; /* tile-8 sea-glass */
+  --color-o-ink: #123b37; /* tile-ink-light, 7.7:1 */
+  --color-x-fill: #236c9c; /* tile-128 channel */
+  --color-x-ink: #f0fbf9; /* tile-ink-dark, 5.4:1 */
+  --color-pearl: #e9fbd9; /* tile-2048 */
+  --color-pearl-ink: #123b37;
+
+  --font-display: var(--font-unbounded), 'Sora', system-ui, sans-serif;
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  --shadow-glass: var(--shadow-glass);
+  --shadow-tile: 0 2px 0 rgba(0, 20, 26, 0.18);
+  --shadow-pearl: 0 0 28px rgba(210, 255, 225, 0.55);
+
+  --animate-pop: pop 160ms ease-out both;
+  --animate-merge: merge 180ms ease-out both;
+  --animate-rise: rise 320ms ease-out both;
+  --animate-drift: drift 60s ease-in-out infinite alternate;
+
+  @keyframes pop {
+    from {
+      transform: scale(0.6);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  @keyframes merge {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.12);
+    }
+  }
+  @keyframes rise {
+    from {
+      transform: translateY(8px);
+      opacity: 0;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+  @keyframes drift {
+    from {
+      transform: translate3d(-4%, -3%, 0) scale(1);
+    }
+    to {
+      transform: translate3d(4%, 3%, 0) scale(1.08);
+    }
+  }
+}
+
+@layer base {
+  html,
+  body {
+    background: var(--ground-000);
+    color: var(--ink);
+  }
+  body {
+    @apply min-h-dvh font-sans antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+}
+
+@layer components {
+  /* The one frosted panel per screen. */
+  .console {
+    background: var(--glass);
+    border: 1px solid var(--glass-edge);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-glass);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .console {
+      background: var(--ground-100);
+    }
+  }
+  .label {
+    @apply text-[11px] leading-[14px] font-bold tracking-[0.12em] text-ink-muted uppercase;
+  }
+}
+
+/* Aurora glows behind everything (CSS fallback when PixiJS effects are off). */
+.aurora::before,
+.aurora::after,
+.aurora > i {
+  content: '';
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+}
+.aurora::before {
+  width: 70vmax;
+  height: 70vmax;
+  left: -25vmax;
+  top: -30vmax;
+  background: radial-gradient(closest-side, var(--glow-teal), transparent);
+}
+.aurora::after {
+  width: 60vmax;
+  height: 60vmax;
+  right: -25vmax;
+  top: 10vh;
+  background: radial-gradient(closest-side, var(--glow-sea), transparent);
+}
+.aurora > i {
+  width: 70vmax;
+  height: 50vmax;
+  left: 10vw;
+  bottom: -30vmax;
+  background: radial-gradient(closest-side, var(--glow-kelp), transparent);
+}
+:root[data-effects='on'] .aurora::before,
+:root[data-effects='on'] .aurora::after,
+:root[data-effects='on'] .aurora > i {
+  animation: var(--animate-drift);
+}
+.aurora::after {
+  animation-delay: -20s !important;
+}
+.aurora > i {
+  animation-delay: -40s !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes ink {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes loader {
+  0%,
+  100% {
+    background-color: var(--glass-raised);
+  }
+  40% {
+    background-color: var(--accent);
+  }
+}
