@@ -51,7 +51,20 @@ The rules run on the server (`src/lib/game.ts`), so a player can't move out of t
 
 ### Storage
 
-Data is kept in a JSON file (`.data/db.json`, or `$DATA_DIR/db.json`), loaded into memory and written atomically on every change. Live updates use an in-process event bus. That fits one long-running Node server (`npm run build && npm start`, a VPS, Fly.io, Render, Railway, Docker). Serverless hosts such as Netlify or Vercel functions don't keep files or share memory between instances; for those, swap `src/lib/server/store.ts` and `events.ts` for Postgres/Redis. Nothing else touches storage.
+The dataset lives in memory on one Node server and every change is saved:
+
+- **`DATABASE_URL` set**: to Postgres, one JSONB row per user and game in a `ttt_records` table (created on first start).
+- **Otherwise**: to `.data/db.json` (or `$DATA_DIR/db.json`). Good for local development.
+
+Live updates use an in-process event bus, so run a single instance. To scale out, move `src/lib/server/store.ts` and `events.ts` to a shared store such as Postgres + Redis.
+
+## Deploying to Render (free tier)
+
+1. In Render, choose **New → Blueprint** and pick this repository. `render.yaml` creates a free Node web service.
+2. When asked for `DATABASE_URL`, paste a Postgres connection string. Free web services on Render lose their disk on every restart, so without one, games disappear whenever the service sleeps.
+   - [Neon](https://neon.tech)'s free plan works and doesn't expire. Use its pooled connection string, which ends in `?sslmode=require`.
+   - Render's own free Postgres works too, but it expires 30 days after creation.
+3. Deploy. Free services sleep after 15 minutes without visitors, and the first visit after that takes about a minute while the service wakes up. Open lobbies reconnect on their own.
 
 ## Development
 

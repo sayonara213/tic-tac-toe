@@ -1,0 +1,17 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+# Free web services lose their disk on every restart, so game data goes to
+# Postgres. Paste a connection string into DATABASE_URL when Render asks
+# (a free Neon database works and does not expire; see README).
+services:
+  - type: web
+    name: tictactoe
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: '22'
+      - key: DATABASE_URL
+        sync: false

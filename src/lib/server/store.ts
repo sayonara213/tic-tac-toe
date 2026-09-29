@@ -1,12 +1,10 @@
 import 'server-only';
-import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
-import path from 'node:path';
 import type { Board, Mark } from '../game';
+import { persistence } from './persistence';
 
-// A small JSON-file database. The whole dataset lives in memory and every
-// mutation is flushed to disk with an atomic rename, one write at a time.
-// It replaces Firestore for a single Node server (`next start`). To scale out,
-// reimplement `Db` against Postgres/Redis; nothing else touches storage.
+// The whole dataset lives in memory on one Node server (`next start`) and every
+// mutation is flushed, one write at a time, to a Postgres table when
+// DATABASE_URL is set, or to a JSON file otherwise. This replaces Firestore.
 
 export interface UserRecord {
   uid: string;
@@ -38,13 +36,10 @@ export interface GameRecord {
   version: number;
 }
 
-interface Data {
+export interface Data {
   users: Record<string, UserRecord>;
   games: Record<string, GameRecord>;
 }
-
-const DATA_DIR = process.env.DATA_DIR || path.join(process.cwd(), '.data');
-const FILE = path.join(DATA_DIR, 'db.json');
 
 class Db {
   private data: Data | null = null;
@@ -54,15 +49,13 @@ class Db {
 
   private async load(): Promise<Data> {
     if (this.data) return this.data;
-    this.loading ??= (async () => {
-      try {
-        this.data = JSON.parse(await readFile(FILE, 'utf8')) as Data;
-      } catch (err) {
-        if ((err as NodeJS.ErrnoException).code !== 'ENOENT') throw err;
-        this.data = { users: {}, games: {} };
-      }
-      return this.data;
-    })();
+    this.loading ??= persistence
+      .load()
+      .then((data) => (this.data = data))
+      .catch((err) => {
+        this.loading = null; // retry on the next request
+        throw err;
+      });
     return this.loading;
   }
 
@@ -83,10 +76,12 @@ class Db {
   private async flush() {
     if (!this.dirty || !this.data) return;
     this.dirty = false;
-    await mkdir(DATA_DIR, { recursive: true });
-    const tmp = `${FILE}.${process.pid}.tmp`;
-    await writeFile(tmp, JSON.stringify(this.data));
-    await rename(tmp, FILE);
+    try {
+      await persistence.save(this.data);
+    } catch (err) {
+      this.dirty = true; // keep it for the next write
+      console.error('Saving game data failed', err);
+    }
   }
 }
 
